@@ -57,6 +57,15 @@ class ProductsViewController: UIViewController {
         colorButton.layer.borderWidth = 1
         colorButton.layer.borderColor = UIColor.black.cgColor
         
+        let addToBagButton = UIButton()
+        addToBagButton.setTitle("Add to Bag", for: .normal)
+        addToBagButton.setTitleColor(.white, for: .normal)
+        addToBagButton.backgroundColor = .black
+        addToBagButton.layer.cornerRadius = 8 // Set the border radius to 8 pixels
+        addToBagButton.translatesAutoresizingMaskIntoConstraints = false
+        addToBagButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside) // Add an action to the button
+
+        
         view.addSubview(scrollView)
         scrollView.addSubview(image)
         scrollView.addSubview(brandLabel)
@@ -66,6 +75,7 @@ class ProductsViewController: UIViewController {
         scrollView.addSubview(sizeGuideLabel)
         scrollView.addSubview(sizeButton)
         scrollView.addSubview(colorButton)
+        scrollView.addSubview(addToBagButton)
         
         NSLayoutConstraint.activate([
             
@@ -97,14 +107,19 @@ class ProductsViewController: UIViewController {
             sizeGuideLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
             sizeButton.topAnchor.constraint(equalTo: sizeGuideLabel.bottomAnchor, constant: 32),
-            sizeButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            sizeButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             sizeButton.heightAnchor.constraint(equalToConstant: 56),
-            sizeButton.widthAnchor.constraint(equalToConstant: 349),
+            sizeButton.widthAnchor.constraint(equalToConstant: 350),
             
             colorButton.topAnchor.constraint(equalTo: sizeButton.bottomAnchor, constant: 24),
-            colorButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            colorButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             colorButton.heightAnchor.constraint(equalToConstant: 56),
-            colorButton.widthAnchor.constraint(equalToConstant: 349),
+            colorButton.widthAnchor.constraint(equalToConstant: 350),
+            
+            addToBagButton.topAnchor.constraint(equalTo: colorButton.bottomAnchor, constant: 32),
+            addToBagButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            addToBagButton.widthAnchor.constraint(equalToConstant: 350),
+            addToBagButton.heightAnchor.constraint(equalToConstant: 56),
         ])
 
     }
@@ -123,6 +138,10 @@ class ProductsViewController: UIViewController {
         view.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .vertical)
 
         return view
+    }
+    
+    @objc func buttonTapped() {
+        print("Button tapped") // Print a message when the button is tapped
     }
 
 }
