@@ -19,7 +19,7 @@ class ProductsViewController: UIViewController {
         
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.contentSize = view.bounds.size
+        scrollView.contentSize = CGSizeMake(self.view.frame.width, self.view.frame.height + 100)
         
         let image = makeImageView(named: "airwalk_one")
         let favImage = makeImageView(named: "heart")
@@ -69,12 +69,12 @@ class ProductsViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            image.topAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.topAnchor),
+            image.topAnchor.constraint(equalTo: scrollView.topAnchor),
             image.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             image.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             image.heightAnchor.constraint(equalToConstant: 418),
