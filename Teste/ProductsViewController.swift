@@ -61,9 +61,13 @@ class ProductsViewController: UIViewController {
         addToBagButton.setTitle("Add to Bag", for: .normal)
         addToBagButton.setTitleColor(.white, for: .normal)
         addToBagButton.backgroundColor = .black
-        addToBagButton.layer.cornerRadius = 8 // Set the border radius to 8 pixels
+        addToBagButton.layer.cornerRadius = 8
         addToBagButton.translatesAutoresizingMaskIntoConstraints = false
-        addToBagButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside) // Add an action to the button
+        addToBagButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        
+        let divider = UIView(frame: CGRect(x: 0, y: 100, width: 320, height: 1.0))
+        divider.translatesAutoresizingMaskIntoConstraints = false
+        divider.backgroundColor = .black
 
         
         view.addSubview(scrollView)
@@ -76,6 +80,7 @@ class ProductsViewController: UIViewController {
         scrollView.addSubview(sizeButton)
         scrollView.addSubview(colorButton)
         scrollView.addSubview(addToBagButton)
+        scrollView.addSubview(divider)
         
         NSLayoutConstraint.activate([
             
@@ -120,13 +125,18 @@ class ProductsViewController: UIViewController {
             addToBagButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             addToBagButton.widthAnchor.constraint(equalToConstant: 350),
             addToBagButton.heightAnchor.constraint(equalToConstant: 56),
+            
+            divider.topAnchor.constraint(equalTo: addToBagButton.bottomAnchor, constant: 24),
+            divider.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            divider.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            divider.heightAnchor.constraint(equalToConstant: 1)
         ])
 
     }
     
     
     @objc func searchProducts() {
-        // TODO
+        print("Button tapped") // Print a message when the button is tapped
     }
     
     public func makeImageView(named: String) -> UIImageView {
