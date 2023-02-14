@@ -23,6 +23,8 @@
 		F2B682AA299959FC00CD7FFC /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F2B682A9299959FC00CD7FFC /* Roboto-Bold.ttf */; };
 		F2B682AB299959FC00CD7FFC /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F2B682A9299959FC00CD7FFC /* Roboto-Bold.ttf */; };
 		F2B682AC299959FC00CD7FFC /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F2B682A9299959FC00CD7FFC /* Roboto-Bold.ttf */; };
+		F2B682B2299BABF500CD7FFC /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F2B682B1299BABF500CD7FFC /* Inter-Regular.ttf */; };
+		F2B682B4299BB2D800CD7FFC /* SFButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B682B3299BB2D800CD7FFC /* SFButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,8 @@
 		F2B6825629993B0600CD7FFC /* ProductsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsViewController.swift; sourceTree = "<group>"; };
 		F2B682642999506200CD7FFC /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		F2B682A9299959FC00CD7FFC /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
+		F2B682B1299BABF500CD7FFC /* Inter-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Regular.ttf"; sourceTree = "<group>"; };
+		F2B682B3299BB2D800CD7FFC /* SFButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +118,7 @@
 				F2B682282999394700CD7FFC /* SceneDelegate.swift */,
 				F2B6822A2999394700CD7FFC /* ViewController.swift */,
 				F2B6825629993B0600CD7FFC /* ProductsViewController.swift */,
+				F2B682B3299BB2D800CD7FFC /* SFButton.swift */,
 				F2B6822C2999394700CD7FFC /* Main.storyboard */,
 				F2B6822F2999394A00CD7FFC /* Assets.xcassets */,
 				F2B682312999394A00CD7FFC /* LaunchScreen.storyboard */,
@@ -142,6 +147,7 @@
 		F2B6825C2999504800CD7FFC /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				F2B682B1299BABF500CD7FFC /* Inter-Regular.ttf */,
 				F2B682A9299959FC00CD7FFC /* Roboto-Bold.ttf */,
 				F2B682642999506200CD7FFC /* Roboto-Regular.ttf */,
 			);
@@ -256,6 +262,7 @@
 				F2B682302999394A00CD7FFC /* Assets.xcassets in Resources */,
 				F2B682AA299959FC00CD7FFC /* Roboto-Bold.ttf in Resources */,
 				F2B682852999506200CD7FFC /* Roboto-Regular.ttf in Resources */,
+				F2B682B2299BABF500CD7FFC /* Inter-Regular.ttf in Resources */,
 				F2B6822E2999394700CD7FFC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -285,6 +292,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2B682B4299BB2D800CD7FFC /* SFButton.swift in Sources */,
 				F2B6822B2999394700CD7FFC /* ViewController.swift in Sources */,
 				F2B682272999394700CD7FFC /* AppDelegate.swift in Sources */,
 				F2B6825729993B0600CD7FFC /* ProductsViewController.swift in Sources */,

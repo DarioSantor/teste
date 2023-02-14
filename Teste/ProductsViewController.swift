@@ -40,34 +40,57 @@ class ProductsViewController: UIViewController {
         sizeGuideLabel.attributedText = NSAttributedString(string: "Size Guide", attributes:
             [.underlineStyle: NSUnderlineStyle.single.rawValue])
         
+        let sizeButton = SFButton(text: "Select size", sfSymbolName: "chevron.down")
+        sizeButton.translatesAutoresizingMaskIntoConstraints = false
+        sizeButton.layer.cornerRadius = 8
+        sizeButton.layer.borderWidth = 1
+        sizeButton.layer.borderColor = UIColor.black.cgColor
+        
+        let colorButton = SFButton(text: "Select size", sfSymbolName: "chevron.down")
+        colorButton.translatesAutoresizingMaskIntoConstraints = false
+        colorButton.layer.cornerRadius = 8
+        colorButton.layer.borderWidth = 1
+        colorButton.layer.borderColor = UIColor.black.cgColor
+        
         view.addSubview(image)
         view.addSubview(brandLabel)
         view.addSubview(favImage)
         view.addSubview(modelLabel)
         view.addSubview(priceLabel)
         view.addSubview(sizeGuideLabel)
+        view.addSubview(sizeButton)
+        view.addSubview(colorButton)
         
-        image.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        image.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        image.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        image.heightAnchor.constraint(equalToConstant: 418).isActive = true
+        NSLayoutConstraint.activate([
+            
+            image.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            image.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            image.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            image.heightAnchor.constraint(equalToConstant: 418),
 
-        brandLabel.topAnchor.constraint(equalTo: image.bottomAnchor, constant: 40).isActive = true
-        brandLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        
-        favImage.centerYAnchor.constraint(equalTo: brandLabel.centerYAnchor).isActive = true
-        favImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
-        favImage.widthAnchor.constraint(equalToConstant: 22).isActive = true
-        favImage.heightAnchor.constraint(equalToConstant: 18.67).isActive = true
-        
-        modelLabel.topAnchor.constraint(equalTo: brandLabel.bottomAnchor, constant: 8).isActive = true
-        modelLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        
-        priceLabel.topAnchor.constraint(equalTo: modelLabel.bottomAnchor, constant: 8).isActive = true
-        priceLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        
-        sizeGuideLabel.topAnchor.constraint(equalTo: priceLabel.bottomAnchor, constant: 32).isActive = true
-        sizeGuideLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+            brandLabel.topAnchor.constraint(equalTo: image.bottomAnchor, constant: 40),
+            brandLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            
+            favImage.centerYAnchor.constraint(equalTo: brandLabel.centerYAnchor),
+            favImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            favImage.widthAnchor.constraint(equalToConstant: 22),
+            favImage.heightAnchor.constraint(equalToConstant: 18.67),
+            
+            modelLabel.topAnchor.constraint(equalTo: brandLabel.bottomAnchor, constant: 8),
+            modelLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            
+            priceLabel.topAnchor.constraint(equalTo: modelLabel.bottomAnchor, constant: 8),
+            priceLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            
+            sizeGuideLabel.topAnchor.constraint(equalTo: priceLabel.bottomAnchor, constant: 32),
+            sizeGuideLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            
+            sizeButton.topAnchor.constraint(equalTo: sizeGuideLabel.bottomAnchor, constant: 32),
+            sizeButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            sizeButton.heightAnchor.constraint(equalToConstant: 56),
+            sizeButton.widthAnchor.constraint(equalToConstant: 349),
+        ])
+
     }
     
     
