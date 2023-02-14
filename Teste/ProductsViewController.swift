@@ -11,10 +11,15 @@ import UIKit
 class ProductsViewController: UIViewController {
     
     override func viewDidLoad() {
-        view.backgroundColor = .white
         super.viewDidLoad()
         
+        view.backgroundColor = .white
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(searchProducts))
+        
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.contentSize = view.bounds.size
         
         let image = makeImageView(named: "airwalk_one")
         let favImage = makeImageView(named: "heart")
@@ -46,24 +51,30 @@ class ProductsViewController: UIViewController {
         sizeButton.layer.borderWidth = 1
         sizeButton.layer.borderColor = UIColor.black.cgColor
         
-        let colorButton = SFButton(text: "Select size", sfSymbolName: "chevron.down")
+        let colorButton = SFButton(text: "Select colour", sfSymbolName: "chevron.down")
         colorButton.translatesAutoresizingMaskIntoConstraints = false
         colorButton.layer.cornerRadius = 8
         colorButton.layer.borderWidth = 1
         colorButton.layer.borderColor = UIColor.black.cgColor
         
-        view.addSubview(image)
-        view.addSubview(brandLabel)
-        view.addSubview(favImage)
-        view.addSubview(modelLabel)
-        view.addSubview(priceLabel)
-        view.addSubview(sizeGuideLabel)
-        view.addSubview(sizeButton)
-        view.addSubview(colorButton)
+        view.addSubview(scrollView)
+        scrollView.addSubview(image)
+        scrollView.addSubview(brandLabel)
+        scrollView.addSubview(favImage)
+        scrollView.addSubview(modelLabel)
+        scrollView.addSubview(priceLabel)
+        scrollView.addSubview(sizeGuideLabel)
+        scrollView.addSubview(sizeButton)
+        scrollView.addSubview(colorButton)
         
         NSLayoutConstraint.activate([
             
-            image.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            image.topAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.topAnchor),
             image.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             image.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             image.heightAnchor.constraint(equalToConstant: 418),
@@ -89,6 +100,11 @@ class ProductsViewController: UIViewController {
             sizeButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             sizeButton.heightAnchor.constraint(equalToConstant: 56),
             sizeButton.widthAnchor.constraint(equalToConstant: 349),
+            
+            colorButton.topAnchor.constraint(equalTo: sizeButton.bottomAnchor, constant: 24),
+            colorButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            colorButton.heightAnchor.constraint(equalToConstant: 56),
+            colorButton.widthAnchor.constraint(equalToConstant: 349),
         ])
 
     }
