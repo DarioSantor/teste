@@ -13,10 +13,12 @@ class ProductsViewController: UIViewController {
     let descriptionText = UITextView()
     var isDescriptionTextVisible = false
     var descriptionButton = UIButton()
-    
     let deliveryText = UITextView()
     var isDeliveryTextVisible = false
     var deliveryButton = UIButton()
+    lazy var divider1 = makeDividerView()
+    lazy var divider2 = makeDividerView()
+    lazy var divider3 = makeDividerView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +29,7 @@ class ProductsViewController: UIViewController {
         
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.contentSize = CGSizeMake(self.view.frame.width, self.view.frame.height + 200)
+        scrollView.contentSize = CGSizeMake(self.view.frame.width, self.view.frame.height + 1200)
         
         let image = makeImageView(named: "airwalk_one")
         let favImage = makeImageView(named: "heart")
@@ -71,46 +73,41 @@ class ProductsViewController: UIViewController {
         addToBagButton.backgroundColor = .black
         addToBagButton.layer.cornerRadius = 8
         addToBagButton.translatesAutoresizingMaskIntoConstraints = false
-        addToBagButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-        
-        let divider1 = makeDividerView()
+        addToBagButton.addTarget(self, action: #selector(addToBagAction), for: .touchUpInside)
         
         descriptionButton = NoBorderButton(text: "Description", sfSymbolName: "")
         descriptionButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
         descriptionButton.tintColor = .black
         descriptionButton.translatesAutoresizingMaskIntoConstraints = false
         descriptionButton.setTitleColor(.black, for: .normal)
-        descriptionButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        descriptionButton.addTarget(self, action: #selector(descriptionButtonTapped), for: .touchUpInside)
         descriptionButton.contentHorizontalAlignment = .right
         
         descriptionText.text = """
                                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
                                 """
         descriptionText.font = UIFont.systemFont(ofSize: 16)
-        descriptionText.backgroundColor = .white
         descriptionText.translatesAutoresizingMaskIntoConstraints = false
-        descriptionText.alpha = 0
-
-        
-        let divider2 = makeDividerView()
+        descriptionText.sizeToFit()
+        descriptionText.isScrollEnabled = false
+//        descriptionText.isHidden = true
         
         deliveryButton = NoBorderButton(text: "Delivery & Returns", sfSymbolName: "")
         deliveryButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
         deliveryButton.tintColor = .black
         deliveryButton.translatesAutoresizingMaskIntoConstraints = false
         deliveryButton.setTitleColor(.black, for: .normal)
-        deliveryButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        deliveryButton.addTarget(self, action: #selector(deliveryButtonTapped), for: .touchUpInside)
         deliveryButton.contentHorizontalAlignment = .right
         
         deliveryText.text = """
                                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
                                 """
         deliveryText.font = UIFont.systemFont(ofSize: 16)
-        deliveryText.backgroundColor = .white
         deliveryText.translatesAutoresizingMaskIntoConstraints = false
-        deliveryText.alpha = 0
-        
-        let divider3 = makeDividerView()
+        deliveryText.sizeToFit()
+        deliveryText.isScrollEnabled = false
+        deliveryText.isHidden = true
         
         view.addSubview(scrollView)
         scrollView.addSubview(image)
@@ -182,14 +179,12 @@ class ProductsViewController: UIViewController {
             descriptionButton.topAnchor.constraint(equalTo: divider1.bottomAnchor, constant: 26),
             descriptionButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             descriptionButton.widthAnchor.constraint(equalToConstant: 350),
-//            detailsButton.heightAnchor.constraint(equalToConstant: 56),
-//            detailsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
             
-//            theDetailsText.topAnchor.constraint(equalTo: detailsButton.bottomAnchor, constant: 32),
-//            theDetailsText.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            theDetailsText.widthAnchor.constraint(equalToConstant: 350),
-            
-            divider2.topAnchor.constraint(equalTo: descriptionButton.bottomAnchor, constant: 26),
+            descriptionText.topAnchor.constraint(equalTo: descriptionButton.bottomAnchor, constant: 32),
+            descriptionText.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            descriptionText.widthAnchor.constraint(equalToConstant: 350),
+        
+            divider2.topAnchor.constraint(equalTo: descriptionText.bottomAnchor, constant: 26),
             divider2.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             divider2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             divider2.heightAnchor.constraint(equalToConstant: 1),
@@ -198,17 +193,23 @@ class ProductsViewController: UIViewController {
             deliveryButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             deliveryButton.widthAnchor.constraint(equalToConstant: 350),
             
-            divider3.topAnchor.constraint(equalTo: deliveryButton.bottomAnchor, constant: 26),
+            deliveryText.topAnchor.constraint(equalTo: deliveryButton.bottomAnchor, constant: 32),
+            deliveryText.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            deliveryText.widthAnchor.constraint(equalToConstant: 350),
+            
+            divider3.topAnchor.constraint(equalTo: deliveryText.bottomAnchor, constant: 26),
             divider3.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             divider3.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             divider3.heightAnchor.constraint(equalToConstant: 1),
         ])
-
     }
     
-    
     @objc func searchProducts() {
-        print("Button tapped")
+        print("Search Button tapped")
+    }
+    
+    @objc func addToBagAction() {
+        print("Add To Bag Button tapped")
     }
     
     public func makeImageView(named: String) -> UIImageView {
@@ -222,15 +223,29 @@ class ProductsViewController: UIViewController {
         return view
     }
     
-    @objc func buttonTapped() {
-        print("Button tapped")
+    @objc func descriptionButtonTapped() {
+        print("Description Button tapped")
         isDescriptionTextVisible.toggle()
         if isDescriptionTextVisible {
+//            descriptionText.heightAnchor.constraint(equalToConstant: 0).isActive = false
+//            descriptionText.isHidden = false
             descriptionButton.setImage(UIImage(systemName: "chevron.up"), for: .normal)
-            descriptionText.alpha = 1
         } else {
+//            descriptionText.heightAnchor.constraint(equalToConstant: 0).isActive = true
+//            descriptionText.isHidden = true
             descriptionButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
-            descriptionText.alpha = 0
+        }
+    }
+    
+    @objc func deliveryButtonTapped() {
+        print("Delivery Button tapped")
+        isDeliveryTextVisible.toggle()
+        if isDeliveryTextVisible {
+            deliveryText.isHidden = false
+            deliveryButton.setImage(UIImage(systemName: "chevron.up"), for: .normal)
+        } else {
+            deliveryText.isHidden = true
+            deliveryButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
         }
     }
 
@@ -242,4 +257,3 @@ class ProductsViewController: UIViewController {
         return view
     }
 }
-
