@@ -10,6 +10,10 @@ import UIKit
 
 class ProductsViewController: UIViewController {
     
+    let textField = UITextField()
+    var isTextFieldVisible = false
+    var detailsButton = UIButton()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -65,10 +69,29 @@ class ProductsViewController: UIViewController {
         addToBagButton.translatesAutoresizingMaskIntoConstraints = false
         addToBagButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         
-        let divider = UIView(frame: CGRect(x: 0, y: 100, width: 320, height: 1.0))
-        divider.translatesAutoresizingMaskIntoConstraints = false
-        divider.backgroundColor = .black
+        let divider1 = makeDividerView()
+        
+        detailsButton = SFButton(text: "The Details", sfSymbolName: "")
+        detailsButton.setImage(isTextFieldVisible ? UIImage(systemName: "chevron.up") : UIImage(systemName: "chevron.down"), for: .normal)
+        detailsButton.tintColor = .black
+        detailsButton.translatesAutoresizingMaskIntoConstraints = false
+        detailsButton.setTitleColor(.black, for: .normal)
+        detailsButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        detailsButton.contentHorizontalAlignment = .right
+        
+        textField.placeholder = """
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
+                                """
+        textField.font = UIFont.systemFont(ofSize: 16)
+        textField.backgroundColor = .white
+        view.addSubview(textField)
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.alpha = 0
 
+        
+        let divider2 = makeDividerView()
+        
+        let divider3 = makeDividerView()
         
         view.addSubview(scrollView)
         scrollView.addSubview(image)
@@ -80,7 +103,10 @@ class ProductsViewController: UIViewController {
         scrollView.addSubview(sizeButton)
         scrollView.addSubview(colorButton)
         scrollView.addSubview(addToBagButton)
-        scrollView.addSubview(divider)
+        scrollView.addSubview(divider1)
+        scrollView.addSubview(detailsButton)
+        scrollView.addSubview(divider2)
+        scrollView.addSubview(divider3)
         
         NSLayoutConstraint.activate([
             
@@ -126,17 +152,28 @@ class ProductsViewController: UIViewController {
             addToBagButton.widthAnchor.constraint(equalToConstant: 350),
             addToBagButton.heightAnchor.constraint(equalToConstant: 56),
             
-            divider.topAnchor.constraint(equalTo: addToBagButton.bottomAnchor, constant: 24),
-            divider.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            divider.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            divider.heightAnchor.constraint(equalToConstant: 1)
+            divider1.topAnchor.constraint(equalTo: addToBagButton.bottomAnchor, constant: 24),
+            divider1.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            divider1.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            divider1.heightAnchor.constraint(equalToConstant: 1),
+            
+            detailsButton.topAnchor.constraint(equalTo: addToBagButton.bottomAnchor, constant: 30),
+            detailsButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            detailsButton.widthAnchor.constraint(equalToConstant: 350),
+            detailsButton.heightAnchor.constraint(equalToConstant: 56),
+            detailsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            
+            textField.topAnchor.constraint(equalTo: detailsButton.bottomAnchor, constant: 32),
+            textField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            textField.widthAnchor.constraint(equalToConstant: 350),
+            textField.heightAnchor.constraint(equalToConstant: 56),
         ])
 
     }
     
     
     @objc func searchProducts() {
-        print("Button tapped") // Print a message when the button is tapped
+        print("Button tapped")
     }
     
     public func makeImageView(named: String) -> UIImageView {
@@ -151,8 +188,23 @@ class ProductsViewController: UIViewController {
     }
     
     @objc func buttonTapped() {
-        print("Button tapped") // Print a message when the button is tapped
+        print("Button tapped")
+        isTextFieldVisible.toggle()
+        if isTextFieldVisible {
+            detailsButton.setImage(UIImage(systemName: "chevron.up"), for: .normal)
+            textField.alpha = 1
+        } else {
+            detailsButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+            textField.alpha = 0
+        }
     }
 
+    
+    public func makeDividerView() -> UIView {
+        let view = UIView(frame: CGRect(x: 0, y: 100, width: 320, height: 1.0))
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor(red: 0.851, green: 0.851, blue: 0.851, alpha: 1)
+        return view
+    }
 }
 
