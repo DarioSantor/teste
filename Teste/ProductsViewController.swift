@@ -10,9 +10,13 @@ import UIKit
 
 class ProductsViewController: UIViewController {
     
-    let textField = UITextField()
-    var isTextFieldVisible = false
-    var detailsButton = UIButton()
+    let descriptionText = UITextView()
+    var isDescriptionTextVisible = false
+    var descriptionButton = UIButton()
+    
+    let deliveryText = UITextView()
+    var isDeliveryTextVisible = false
+    var deliveryButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +27,7 @@ class ProductsViewController: UIViewController {
         
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.contentSize = CGSizeMake(self.view.frame.width, self.view.frame.height + 100)
+        scrollView.contentSize = CGSizeMake(self.view.frame.width, self.view.frame.height + 200)
         
         let image = makeImageView(named: "airwalk_one")
         let favImage = makeImageView(named: "heart")
@@ -49,13 +53,13 @@ class ProductsViewController: UIViewController {
         sizeGuideLabel.attributedText = NSAttributedString(string: "Size Guide", attributes:
             [.underlineStyle: NSUnderlineStyle.single.rawValue])
         
-        let sizeButton = SFButton(text: "Select size", sfSymbolName: "chevron.down")
+        let sizeButton = BorderButton(text: "Select size", sfSymbolName: "chevron.down")
         sizeButton.translatesAutoresizingMaskIntoConstraints = false
         sizeButton.layer.cornerRadius = 8
         sizeButton.layer.borderWidth = 1
         sizeButton.layer.borderColor = UIColor.black.cgColor
         
-        let colorButton = SFButton(text: "Select colour", sfSymbolName: "chevron.down")
+        let colorButton = BorderButton(text: "Select colour", sfSymbolName: "chevron.down")
         colorButton.translatesAutoresizingMaskIntoConstraints = false
         colorButton.layer.cornerRadius = 8
         colorButton.layer.borderWidth = 1
@@ -71,25 +75,40 @@ class ProductsViewController: UIViewController {
         
         let divider1 = makeDividerView()
         
-        detailsButton = SFButton(text: "The Details", sfSymbolName: "")
-        detailsButton.setImage(isTextFieldVisible ? UIImage(systemName: "chevron.up") : UIImage(systemName: "chevron.down"), for: .normal)
-        detailsButton.tintColor = .black
-        detailsButton.translatesAutoresizingMaskIntoConstraints = false
-        detailsButton.setTitleColor(.black, for: .normal)
-        detailsButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-        detailsButton.contentHorizontalAlignment = .right
+        descriptionButton = NoBorderButton(text: "Description", sfSymbolName: "")
+        descriptionButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+        descriptionButton.tintColor = .black
+        descriptionButton.translatesAutoresizingMaskIntoConstraints = false
+        descriptionButton.setTitleColor(.black, for: .normal)
+        descriptionButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        descriptionButton.contentHorizontalAlignment = .right
         
-        textField.placeholder = """
+        descriptionText.text = """
                                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
                                 """
-        textField.font = UIFont.systemFont(ofSize: 16)
-        textField.backgroundColor = .white
-        view.addSubview(textField)
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.alpha = 0
+        descriptionText.font = UIFont.systemFont(ofSize: 16)
+        descriptionText.backgroundColor = .white
+        descriptionText.translatesAutoresizingMaskIntoConstraints = false
+        descriptionText.alpha = 0
 
         
         let divider2 = makeDividerView()
+        
+        deliveryButton = NoBorderButton(text: "Delivery & Returns", sfSymbolName: "")
+        deliveryButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+        deliveryButton.tintColor = .black
+        deliveryButton.translatesAutoresizingMaskIntoConstraints = false
+        deliveryButton.setTitleColor(.black, for: .normal)
+        deliveryButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        deliveryButton.contentHorizontalAlignment = .right
+        
+        deliveryText.text = """
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
+                                """
+        deliveryText.font = UIFont.systemFont(ofSize: 16)
+        deliveryText.backgroundColor = .white
+        deliveryText.translatesAutoresizingMaskIntoConstraints = false
+        deliveryText.alpha = 0
         
         let divider3 = makeDividerView()
         
@@ -104,8 +123,11 @@ class ProductsViewController: UIViewController {
         scrollView.addSubview(colorButton)
         scrollView.addSubview(addToBagButton)
         scrollView.addSubview(divider1)
-        scrollView.addSubview(detailsButton)
+        scrollView.addSubview(descriptionButton)
+        scrollView.addSubview(descriptionText)
         scrollView.addSubview(divider2)
+        scrollView.addSubview(deliveryButton)
+        scrollView.addSubview(deliveryText)
         scrollView.addSubview(divider3)
         
         NSLayoutConstraint.activate([
@@ -152,21 +174,34 @@ class ProductsViewController: UIViewController {
             addToBagButton.widthAnchor.constraint(equalToConstant: 350),
             addToBagButton.heightAnchor.constraint(equalToConstant: 56),
             
-            divider1.topAnchor.constraint(equalTo: addToBagButton.bottomAnchor, constant: 24),
+            divider1.topAnchor.constraint(equalTo: addToBagButton.bottomAnchor, constant: 56),
             divider1.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             divider1.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             divider1.heightAnchor.constraint(equalToConstant: 1),
             
-            detailsButton.topAnchor.constraint(equalTo: addToBagButton.bottomAnchor, constant: 30),
-            detailsButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            detailsButton.widthAnchor.constraint(equalToConstant: 350),
-            detailsButton.heightAnchor.constraint(equalToConstant: 56),
-            detailsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            descriptionButton.topAnchor.constraint(equalTo: divider1.bottomAnchor, constant: 26),
+            descriptionButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            descriptionButton.widthAnchor.constraint(equalToConstant: 350),
+//            detailsButton.heightAnchor.constraint(equalToConstant: 56),
+//            detailsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
             
-            textField.topAnchor.constraint(equalTo: detailsButton.bottomAnchor, constant: 32),
-            textField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            textField.widthAnchor.constraint(equalToConstant: 350),
-            textField.heightAnchor.constraint(equalToConstant: 56),
+//            theDetailsText.topAnchor.constraint(equalTo: detailsButton.bottomAnchor, constant: 32),
+//            theDetailsText.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            theDetailsText.widthAnchor.constraint(equalToConstant: 350),
+            
+            divider2.topAnchor.constraint(equalTo: descriptionButton.bottomAnchor, constant: 26),
+            divider2.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            divider2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            divider2.heightAnchor.constraint(equalToConstant: 1),
+            
+            deliveryButton.topAnchor.constraint(equalTo: divider2.bottomAnchor, constant: 26),
+            deliveryButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            deliveryButton.widthAnchor.constraint(equalToConstant: 350),
+            
+            divider3.topAnchor.constraint(equalTo: deliveryButton.bottomAnchor, constant: 26),
+            divider3.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            divider3.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            divider3.heightAnchor.constraint(equalToConstant: 1),
         ])
 
     }
@@ -189,13 +224,13 @@ class ProductsViewController: UIViewController {
     
     @objc func buttonTapped() {
         print("Button tapped")
-        isTextFieldVisible.toggle()
-        if isTextFieldVisible {
-            detailsButton.setImage(UIImage(systemName: "chevron.up"), for: .normal)
-            textField.alpha = 1
+        isDescriptionTextVisible.toggle()
+        if isDescriptionTextVisible {
+            descriptionButton.setImage(UIImage(systemName: "chevron.up"), for: .normal)
+            descriptionText.alpha = 1
         } else {
-            detailsButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
-            textField.alpha = 0
+            descriptionButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+            descriptionText.alpha = 0
         }
     }
 
