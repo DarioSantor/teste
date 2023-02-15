@@ -31,8 +31,11 @@ class ProductsViewController: UIViewController {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.contentSize = CGSizeMake(self.view.frame.width, self.view.frame.height + 1200)
         
-        let image = makeImageView(named: "airwalk_one")
+//        let image = makeImageView(named: "airwalk_one")
         let favImage = makeImageView(named: "heart")
+        
+        let imageNames = ["first", "second", "third", "fourth"]
+        let carrousel = makeImageViews(named: imageNames)
         
         let brandLabel: UILabel = UILabel()
         brandLabel.text = "Mulher Originals"
@@ -110,7 +113,7 @@ class ProductsViewController: UIViewController {
         deliveryText.isHidden = true
         
         view.addSubview(scrollView)
-        scrollView.addSubview(image)
+        scrollView.addSubview(carrousel)
         scrollView.addSubview(brandLabel)
         scrollView.addSubview(favImage)
         scrollView.addSubview(modelLabel)
@@ -134,12 +137,12 @@ class ProductsViewController: UIViewController {
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            image.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            image.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            image.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            image.heightAnchor.constraint(equalToConstant: 418),
-
-            brandLabel.topAnchor.constraint(equalTo: image.bottomAnchor, constant: 40),
+            carrousel.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            carrousel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            carrousel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            carrousel.heightAnchor.constraint(equalToConstant: 418),
+            
+            brandLabel.topAnchor.constraint(equalTo: carrousel.bottomAnchor, constant: 40),
             brandLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             
             favImage.centerYAnchor.constraint(equalTo: brandLabel.centerYAnchor),
@@ -222,6 +225,36 @@ class ProductsViewController: UIViewController {
 
         return view
     }
+    
+    public func makeImageViews(named imageNames: [String]) -> UIScrollView {
+            let scrollView = UIScrollView()
+            scrollView.translatesAutoresizingMaskIntoConstraints = false
+            scrollView.isPagingEnabled = true
+            scrollView.showsHorizontalScrollIndicator = true
+            var previousView: UIView? = nil
+            for imageName in imageNames {
+                let imageView = UIImageView()
+                imageView.translatesAutoresizingMaskIntoConstraints = false
+                imageView.contentMode = .scaleAspectFill
+                imageView.image = UIImage(named: imageName)
+                imageView.setContentHuggingPriority(UILayoutPriority(rawValue: 250), for: .vertical)
+                imageView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .vertical)
+                scrollView.addSubview(imageView)
+                NSLayoutConstraint.activate([
+                    imageView.leadingAnchor.constraint(equalTo: previousView?.trailingAnchor ?? scrollView.leadingAnchor),
+                    imageView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+                    imageView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+                    imageView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+                ])
+                previousView = imageView
+            }
+            if let previousView = previousView {
+                NSLayoutConstraint.activate([
+                    previousView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor)
+                ])
+            }
+            return scrollView
+        }
     
     @objc func descriptionButtonTapped() {
         print("Description Button tapped")
