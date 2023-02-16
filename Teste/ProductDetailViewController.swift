@@ -1,5 +1,5 @@
 //
-//  ProductsViewController.swift
+//  ProductDetailViewController.swift
 //  Teste
 //
 //  Created by Santos, Dario Ferreira on 12/02/2023.
@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class ProductsViewController: UIViewController {
+class ProductDetailViewController: UIViewController {
     
     let descriptionText = UITextView()
     var isDescriptionTextVisible = false
@@ -20,7 +20,13 @@ class ProductsViewController: UIViewController {
     lazy var divider2 = makeDividerView()
     lazy var divider3 = makeDividerView()
     
+    var descriptionTextHeight: NSLayoutConstraint!
+    var deliveryTextHeight: NSLayoutConstraint!
+    var descriptionTextTopAnchor: NSLayoutConstraint!
+    var deliveryTextTopAnchor: NSLayoutConstraint!
+    
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
         view.backgroundColor = .white
@@ -31,7 +37,6 @@ class ProductsViewController: UIViewController {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.contentSize = CGSizeMake(self.view.frame.width, self.view.frame.height + 1200)
         
-//        let image = makeImageView(named: "airwalk_one")
         let favImage = makeImageView(named: "heart")
         
         let imageNames = ["first", "second", "third", "fourth"]
@@ -93,7 +98,9 @@ class ProductsViewController: UIViewController {
         descriptionText.translatesAutoresizingMaskIntoConstraints = false
         descriptionText.sizeToFit()
         descriptionText.isScrollEnabled = false
-//        descriptionText.isHidden = true
+        
+        descriptionTextHeight = descriptionText.heightAnchor.constraint(equalToConstant: 0)
+        descriptionTextHeight.isActive = true
         
         deliveryButton = NoBorderButton(text: "Delivery & Returns", sfSymbolName: "")
         deliveryButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
@@ -110,7 +117,9 @@ class ProductsViewController: UIViewController {
         deliveryText.translatesAutoresizingMaskIntoConstraints = false
         deliveryText.sizeToFit()
         deliveryText.isScrollEnabled = false
-        deliveryText.isHidden = true
+        
+        deliveryTextHeight = deliveryText.heightAnchor.constraint(equalToConstant: 0)
+        deliveryTextHeight.isActive = true
         
         view.addSubview(scrollView)
         scrollView.addSubview(carrousel)
@@ -183,11 +192,11 @@ class ProductsViewController: UIViewController {
             descriptionButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             descriptionButton.widthAnchor.constraint(equalToConstant: 350),
             
-            descriptionText.topAnchor.constraint(equalTo: descriptionButton.bottomAnchor, constant: 32),
+//            descriptionText.topAnchor.constraint(equalTo: descriptionButton.bottomAnchor, constant: 0),
             descriptionText.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             descriptionText.widthAnchor.constraint(equalToConstant: 350),
         
-            divider2.topAnchor.constraint(equalTo: descriptionText.bottomAnchor, constant: 26),
+            divider2.topAnchor.constraint(equalTo: descriptionText.bottomAnchor, constant: 32),
             divider2.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             divider2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             divider2.heightAnchor.constraint(equalToConstant: 1),
@@ -196,15 +205,22 @@ class ProductsViewController: UIViewController {
             deliveryButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             deliveryButton.widthAnchor.constraint(equalToConstant: 350),
             
-            deliveryText.topAnchor.constraint(equalTo: deliveryButton.bottomAnchor, constant: 32),
+//            deliveryText.topAnchor.constraint(equalTo: deliveryButton.bottomAnchor, constant: 32),
             deliveryText.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             deliveryText.widthAnchor.constraint(equalToConstant: 350),
             
-            divider3.topAnchor.constraint(equalTo: deliveryText.bottomAnchor, constant: 26),
+            divider3.topAnchor.constraint(equalTo: deliveryText.bottomAnchor, constant: 32),
             divider3.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             divider3.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             divider3.heightAnchor.constraint(equalToConstant: 1),
         ])
+        
+        descriptionTextTopAnchor = descriptionText.topAnchor.constraint(equalTo: descriptionButton.bottomAnchor, constant: 0)
+        descriptionTextTopAnchor.isActive = true
+        
+        deliveryTextTopAnchor = descriptionText.topAnchor.constraint(equalTo: deliveryButton.bottomAnchor, constant: 0)
+        deliveryTextTopAnchor.isActive = true
+        
     }
     
     @objc func searchProducts() {
@@ -260,12 +276,12 @@ class ProductsViewController: UIViewController {
         print("Description Button tapped")
         isDescriptionTextVisible.toggle()
         if isDescriptionTextVisible {
-//            descriptionText.heightAnchor.constraint(equalToConstant: 0).isActive = false
-//            descriptionText.isHidden = false
+            descriptionTextHeight.constant = 200
+            descriptionTextTopAnchor.constant = 0
             descriptionButton.setImage(UIImage(systemName: "chevron.up"), for: .normal)
         } else {
-//            descriptionText.heightAnchor.constraint(equalToConstant: 0).isActive = true
-//            descriptionText.isHidden = true
+            descriptionTextHeight.constant = 0
+            descriptionTextTopAnchor.constant = 32
             descriptionButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
         }
     }
@@ -274,10 +290,12 @@ class ProductsViewController: UIViewController {
         print("Delivery Button tapped")
         isDeliveryTextVisible.toggle()
         if isDeliveryTextVisible {
-            deliveryText.isHidden = false
+            deliveryTextHeight.constant = 200
+            deliveryTextTopAnchor.constant = 0
             deliveryButton.setImage(UIImage(systemName: "chevron.up"), for: .normal)
         } else {
-            deliveryText.isHidden = true
+            deliveryTextHeight.constant = 0
+            deliveryTextTopAnchor.constant = 32
             deliveryButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
         }
     }

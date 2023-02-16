@@ -16,7 +16,7 @@
 		F2B6823E2999394A00CD7FFC /* TesteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B6823D2999394A00CD7FFC /* TesteTests.swift */; };
 		F2B682482999394A00CD7FFC /* TesteUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B682472999394A00CD7FFC /* TesteUITests.swift */; };
 		F2B6824A2999394A00CD7FFC /* TesteUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B682492999394A00CD7FFC /* TesteUITestsLaunchTests.swift */; };
-		F2B6825729993B0600CD7FFC /* ProductsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B6825629993B0600CD7FFC /* ProductsViewController.swift */; };
+		F2B6825729993B0600CD7FFC /* ProductDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B6825629993B0600CD7FFC /* ProductDetailViewController.swift */; };
 		F2B682852999506200CD7FFC /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F2B682642999506200CD7FFC /* Roboto-Regular.ttf */; };
 		F2B682862999506200CD7FFC /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F2B682642999506200CD7FFC /* Roboto-Regular.ttf */; };
 		F2B682872999506200CD7FFC /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F2B682642999506200CD7FFC /* Roboto-Regular.ttf */; };
@@ -58,7 +58,7 @@
 		F2B682432999394A00CD7FFC /* TesteUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TesteUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2B682472999394A00CD7FFC /* TesteUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TesteUITests.swift; sourceTree = "<group>"; };
 		F2B682492999394A00CD7FFC /* TesteUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TesteUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		F2B6825629993B0600CD7FFC /* ProductsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsViewController.swift; sourceTree = "<group>"; };
+		F2B6825629993B0600CD7FFC /* ProductDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewController.swift; sourceTree = "<group>"; };
 		F2B682642999506200CD7FFC /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		F2B682A9299959FC00CD7FFC /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		F2B682B1299BABF500CD7FFC /* Inter-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Regular.ttf"; sourceTree = "<group>"; };
@@ -117,7 +117,7 @@
 				F2B682262999394700CD7FFC /* AppDelegate.swift */,
 				F2B682282999394700CD7FFC /* SceneDelegate.swift */,
 				F2B6822A2999394700CD7FFC /* ViewController.swift */,
-				F2B6825629993B0600CD7FFC /* ProductsViewController.swift */,
+				F2B6825629993B0600CD7FFC /* ProductDetailViewController.swift */,
 				F2B682B3299BB2D800CD7FFC /* Buttons.swift */,
 				F2B6822C2999394700CD7FFC /* Main.storyboard */,
 				F2B6822F2999394A00CD7FFC /* Assets.xcassets */,
@@ -295,7 +295,7 @@
 				F2B682B4299BB2D800CD7FFC /* Buttons.swift in Sources */,
 				F2B6822B2999394700CD7FFC /* ViewController.swift in Sources */,
 				F2B682272999394700CD7FFC /* AppDelegate.swift in Sources */,
-				F2B6825729993B0600CD7FFC /* ProductsViewController.swift in Sources */,
+				F2B6825729993B0600CD7FFC /* ProductDetailViewController.swift in Sources */,
 				F2B682292999394700CD7FFC /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

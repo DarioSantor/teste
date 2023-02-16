@@ -27,7 +27,7 @@ class ViewController: UIViewController {
 
     @objc func handleLogin() {
         let navController = navigationController
-        navController?.pushViewController(ProductsViewController(), animated: true)
+        navController?.pushViewController(ProductDetailViewController(), animated: true)
         let navBar = navController!.navigationBar
         navBar.backgroundColor = .white
         navBar.tintColor = .black
