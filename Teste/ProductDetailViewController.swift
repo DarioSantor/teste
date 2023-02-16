@@ -10,20 +10,9 @@ import UIKit
 
 class ProductDetailViewController: UIViewController {
     
-    let descriptionText = UITextView()
-    var isDescriptionTextVisible = false
-    var descriptionButton = UIButton()
-    let deliveryText = UITextView()
-    var isDeliveryTextVisible = false
-    var deliveryButton = UIButton()
-    lazy var divider1 = makeDividerView()
-    lazy var divider2 = makeDividerView()
-    lazy var divider3 = makeDividerView()
+    private let productsInfo = InfoAPI.getProductsDetails()
     
-    var descriptionTextHeight: NSLayoutConstraint!
-    var deliveryTextHeight: NSLayoutConstraint!
-    var descriptionTextTopAnchor: NSLayoutConstraint!
-    var deliveryTextTopAnchor: NSLayoutConstraint!
+    var detailsTableView = UITableView()
     
     override func viewDidLoad() {
         
@@ -35,7 +24,7 @@ class ProductDetailViewController: UIViewController {
         
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.contentSize = CGSizeMake(self.view.frame.width, self.view.frame.height + 1200)
+        scrollView.contentSize = CGSizeMake(self.view.frame.width, self.view.frame.height + 600)
         
         let favImage = makeImageView(named: "heart")
         
@@ -61,7 +50,7 @@ class ProductDetailViewController: UIViewController {
         sizeGuideLabel.font = UIFont(name: "Roboto-Regular", size: 16)
         sizeGuideLabel.translatesAutoresizingMaskIntoConstraints = false
         sizeGuideLabel.attributedText = NSAttributedString(string: "Size Guide", attributes:
-            [.underlineStyle: NSUnderlineStyle.single.rawValue])
+                                                            [.underlineStyle: NSUnderlineStyle.single.rawValue])
         
         let sizeButton = BorderButton(text: "Select size", sfSymbolName: "chevron.down")
         sizeButton.translatesAutoresizingMaskIntoConstraints = false
@@ -83,43 +72,22 @@ class ProductDetailViewController: UIViewController {
         addToBagButton.translatesAutoresizingMaskIntoConstraints = false
         addToBagButton.addTarget(self, action: #selector(addToBagAction), for: .touchUpInside)
         
-        descriptionButton = NoBorderButton(text: "Description", sfSymbolName: "")
-        descriptionButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
-        descriptionButton.tintColor = .black
-        descriptionButton.translatesAutoresizingMaskIntoConstraints = false
-        descriptionButton.setTitleColor(.black, for: .normal)
-        descriptionButton.addTarget(self, action: #selector(descriptionButtonTapped), for: .touchUpInside)
-        descriptionButton.contentHorizontalAlignment = .right
+        let divider = UIView()
+        divider.translatesAutoresizingMaskIntoConstraints = false
+        divider.backgroundColor = UIColor(red: 0.851, green: 0.851, blue: 0.851, alpha: 1)
         
-        descriptionText.text = """
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
-                                """
-        descriptionText.font = UIFont.systemFont(ofSize: 16)
-        descriptionText.translatesAutoresizingMaskIntoConstraints = false
-        descriptionText.sizeToFit()
-        descriptionText.isScrollEnabled = false
+        detailsTableView = UITableView()
+        detailsTableView.translatesAutoresizingMaskIntoConstraints = false
+        detailsTableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
+        detailsTableView.dataSource = self
+        detailsTableView.delegate = self
+        detailsTableView.rowHeight = 68
         
-        descriptionTextHeight = descriptionText.heightAnchor.constraint(equalToConstant: 0)
-        descriptionTextHeight.isActive = true
-        
-        deliveryButton = NoBorderButton(text: "Delivery & Returns", sfSymbolName: "")
-        deliveryButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
-        deliveryButton.tintColor = .black
-        deliveryButton.translatesAutoresizingMaskIntoConstraints = false
-        deliveryButton.setTitleColor(.black, for: .normal)
-        deliveryButton.addTarget(self, action: #selector(deliveryButtonTapped), for: .touchUpInside)
-        deliveryButton.contentHorizontalAlignment = .right
-        
-        deliveryText.text = """
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
-                                """
-        deliveryText.font = UIFont.systemFont(ofSize: 16)
-        deliveryText.translatesAutoresizingMaskIntoConstraints = false
-        deliveryText.sizeToFit()
-        deliveryText.isScrollEnabled = false
-        
-        deliveryTextHeight = deliveryText.heightAnchor.constraint(equalToConstant: 0)
-        deliveryTextHeight.isActive = true
+        var tableViewHeight: CGFloat {
+            detailsTableView.layoutIfNeeded()
+
+            return detailsTableView.contentSize.height
+        }
         
         view.addSubview(scrollView)
         scrollView.addSubview(carrousel)
@@ -131,13 +99,8 @@ class ProductDetailViewController: UIViewController {
         scrollView.addSubview(sizeButton)
         scrollView.addSubview(colorButton)
         scrollView.addSubview(addToBagButton)
-        scrollView.addSubview(divider1)
-        scrollView.addSubview(descriptionButton)
-        scrollView.addSubview(descriptionText)
-        scrollView.addSubview(divider2)
-        scrollView.addSubview(deliveryButton)
-        scrollView.addSubview(deliveryText)
-        scrollView.addSubview(divider3)
+        scrollView.addSubview(divider)
+        scrollView.addSubview(detailsTableView)
         
         NSLayoutConstraint.activate([
             
@@ -183,43 +146,16 @@ class ProductDetailViewController: UIViewController {
             addToBagButton.widthAnchor.constraint(equalToConstant: 350),
             addToBagButton.heightAnchor.constraint(equalToConstant: 56),
             
-            divider1.topAnchor.constraint(equalTo: addToBagButton.bottomAnchor, constant: 56),
-            divider1.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            divider1.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            divider1.heightAnchor.constraint(equalToConstant: 1),
+            divider.topAnchor.constraint(equalTo: addToBagButton.bottomAnchor, constant: 56),
+            divider.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            divider.widthAnchor.constraint(equalToConstant: 350),
+            divider.heightAnchor.constraint(equalToConstant: 1),
             
-            descriptionButton.topAnchor.constraint(equalTo: divider1.bottomAnchor, constant: 26),
-            descriptionButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            descriptionButton.widthAnchor.constraint(equalToConstant: 350),
-            
-//            descriptionText.topAnchor.constraint(equalTo: descriptionButton.bottomAnchor, constant: 0),
-            descriptionText.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            descriptionText.widthAnchor.constraint(equalToConstant: 350),
-        
-            divider2.topAnchor.constraint(equalTo: descriptionText.bottomAnchor, constant: 32),
-            divider2.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            divider2.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            divider2.heightAnchor.constraint(equalToConstant: 1),
-            
-            deliveryButton.topAnchor.constraint(equalTo: divider2.bottomAnchor, constant: 26),
-            deliveryButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            deliveryButton.widthAnchor.constraint(equalToConstant: 350),
-            
-//            deliveryText.topAnchor.constraint(equalTo: deliveryButton.bottomAnchor, constant: 32),
-            deliveryText.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            deliveryText.widthAnchor.constraint(equalToConstant: 350),
-            
-            divider3.topAnchor.constraint(equalTo: deliveryText.bottomAnchor, constant: 32),
-            divider3.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            divider3.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            divider3.heightAnchor.constraint(equalToConstant: 1),
+            detailsTableView.topAnchor.constraint(equalTo: divider.bottomAnchor),
+            detailsTableView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            detailsTableView.widthAnchor.constraint(equalToConstant: 350),
+            detailsTableView.heightAnchor.constraint(equalToConstant: tableViewHeight)
         ])
-        
-        descriptionTextTopAnchor = descriptionText.topAnchor.constraint(equalTo: descriptionButton.bottomAnchor, constant: 0)
-        descriptionTextTopAnchor.isActive = true
-        
-        deliveryTextTopAnchor = descriptionText.topAnchor.constraint(equalTo: deliveryButton.bottomAnchor, constant: 0)
-        deliveryTextTopAnchor.isActive = true
         
     }
     
@@ -243,68 +179,54 @@ class ProductDetailViewController: UIViewController {
     }
     
     public func makeImageViews(named imageNames: [String]) -> UIScrollView {
-            let scrollView = UIScrollView()
-            scrollView.translatesAutoresizingMaskIntoConstraints = false
-            scrollView.isPagingEnabled = true
-            scrollView.showsHorizontalScrollIndicator = true
-            var previousView: UIView? = nil
-            for imageName in imageNames {
-                let imageView = UIImageView()
-                imageView.translatesAutoresizingMaskIntoConstraints = false
-                imageView.contentMode = .scaleAspectFill
-                imageView.image = UIImage(named: imageName)
-                imageView.setContentHuggingPriority(UILayoutPriority(rawValue: 250), for: .vertical)
-                imageView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .vertical)
-                scrollView.addSubview(imageView)
-                NSLayoutConstraint.activate([
-                    imageView.leadingAnchor.constraint(equalTo: previousView?.trailingAnchor ?? scrollView.leadingAnchor),
-                    imageView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-                    imageView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-                    imageView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
-                ])
-                previousView = imageView
-            }
-            if let previousView = previousView {
-                NSLayoutConstraint.activate([
-                    previousView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor)
-                ])
-            }
-            return scrollView
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.isPagingEnabled = true
+        scrollView.showsHorizontalScrollIndicator = true
+        scrollView.bounces = false
+        
+        var previousView: UIView? = nil
+        for imageName in imageNames {
+            let imageView = UIImageView()
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            imageView.contentMode = .scaleAspectFill
+            imageView.image = UIImage(named: imageName)
+            imageView.setContentHuggingPriority(UILayoutPriority(rawValue: 250), for: .vertical)
+            imageView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .vertical)
+            scrollView.addSubview(imageView)
+            NSLayoutConstraint.activate([
+                imageView.leadingAnchor.constraint(equalTo: previousView?.trailingAnchor ?? scrollView.leadingAnchor),
+                imageView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+                imageView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+                imageView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+            ])
+            previousView = imageView
         }
-    
-    @objc func descriptionButtonTapped() {
-        print("Description Button tapped")
-        isDescriptionTextVisible.toggle()
-        if isDescriptionTextVisible {
-            descriptionTextHeight.constant = 200
-            descriptionTextTopAnchor.constant = 0
-            descriptionButton.setImage(UIImage(systemName: "chevron.up"), for: .normal)
-        } else {
-            descriptionTextHeight.constant = 0
-            descriptionTextTopAnchor.constant = 32
-            descriptionButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+        if let previousView = previousView {
+            NSLayoutConstraint.activate([
+                previousView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor)
+            ])
         }
-    }
-    
-    @objc func deliveryButtonTapped() {
-        print("Delivery Button tapped")
-        isDeliveryTextVisible.toggle()
-        if isDeliveryTextVisible {
-            deliveryTextHeight.constant = 200
-            deliveryTextTopAnchor.constant = 0
-            deliveryButton.setImage(UIImage(systemName: "chevron.up"), for: .normal)
-        } else {
-            deliveryTextHeight.constant = 0
-            deliveryTextTopAnchor.constant = 32
-            deliveryButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
-        }
-    }
-
-    
-    public func makeDividerView() -> UIView {
-        let view = UIView(frame: CGRect(x: 0, y: 100, width: 320, height: 1.0))
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor(red: 0.851, green: 0.851, blue: 0.851, alpha: 1)
-        return view
+        return scrollView
     }
 }
+
+extension ProductDetailViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Num: \(indexPath.row)")
+        print("Value: \(String(describing: productsInfo[indexPath.row].title))")
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return productsInfo.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath as IndexPath)
+        cell.textLabel!.text = "\(productsInfo[indexPath.row].title ?? "Error fetching data!")"
+        return cell
+    }
+
+}
+
